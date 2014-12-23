@@ -1,0 +1,38 @@
+<% include partials/header %>
+<div class="hide">
+  <div class="" id="player1"><%= p1 %></div>
+  <div class="" id="player2"><%= p2 %></div>
+  <div class="" id="gameid"><%= gameId %></div>
+</div>
+
+<h2>LEZZZ PLAY</h2>
+<h4>You vs. <span class="oName"></span></h4>
+
+
+<div class="gameContainer">
+<!-- OPPONENT BOARD DIV -->
+  <div class="opponentBoardContainer">
+  <h6 class="turn"></h6>
+    <div class="board">
+    <div class="columnDiv columnDivOpponent"></div>
+    <div class="rowDiv rowDivOpponent"></div>
+    <div class="container opponentBoard grid"></div>
+    </div>
+  </div>
+<!-- YOUR BOARD DIV -->
+<!-- <div class="playerBoardContainer">
+  <h5>Your board</h5>
+    <div class="board">
+    <div class="columnDiv columnDivPlayer"></div>
+    <div class="rowDiv rowDivPlayer"></div>
+    <div class="container playerBoard grid"></div>
+    </div>
+  </div> -->
+
+</div>
+
+
+<script src="../../javascripts/connect.js"></script>
+<script src="../../javascripts/drawgame.js"></script>
+<script src="../../javascripts/battleship.js"></script>
+<% include partials/footer %>

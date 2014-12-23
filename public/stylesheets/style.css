@@ -6,3 +6,109 @@ body {
 .hide {
   display: none;
 }
+
+/*BOARD*/
+.setupBoard, .playerBoard, .opponentBoard {
+  box-sizing: border-box;
+  float: left;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+}
+.tile {
+  box-sizing: border-box;
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+/*board labels*/
+.rowDiv {
+  float: left;
+  width: 20px;
+  height: 300px;
+}
+.rowLabel {
+  height: 31px;
+  width: 20px;
+}
+.columnDiv {
+  width: 300px;
+  height: 20px;
+  margin-left: 30px;
+}
+.columnLabel {
+  float: left;
+  width: 30px;
+}
+
+/*SHIP CONTAINER*/
+.shipsContainer {
+  float: left;
+}
+.shipContainer {
+  float: left;
+  padding: 20px;
+}
+.ship {
+  box-sizing: border-box;
+  background-color: blue;
+  opacity: .8;
+  width: 30px;
+  height: 20px;
+  position: absolute;
+  border-radius: 10px;
+}
+.carrier {
+  height: 150px;
+}
+.battleship {
+  height: 120px;
+  background-color: green;
+}
+.submarine, .cruiser {
+  height: 90px;
+  background-color: purple;
+}
+.destroyer {
+  height: 60px;
+}
+
+.submit {
+  margin-bottom: 10px;
+}
+
+/*TILE STATUS*/
+.shot {
+  background-color: red;
+}
+.hitTrue {
+  border: 3px solid orange;
+}
+.hitFalse {
+  border: 3px solid lime;
+}
+.shotTrue {
+  background-color: blue;
+}
+.shotFalse {
+  background-color: gray;
+}
+
+/*OPPONENT BOARD*/
+.playerBoardContainer {
+  padding-top: 20px;
+  clear: both;
+}
+
+/*game*/
+/*.turn {
+  position: absolute;
+}*/
+
+
+
+
+
+
+

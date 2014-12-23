@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     p2socket: DataTypes.STRING,
     p1ready: DataTypes.BOOLEAN,
     p2ready: DataTypes.BOOLEAN,
-    new_connection: DataTypes.BOOLEAN
+    p1reconnect: DataTypes.BOOLEAN,
+    p2reconnect: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: function(models) {

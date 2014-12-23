@@ -26,7 +26,10 @@ module.exports = {
       p2ready: {
         type: DataTypes.BOOLEAN
       },
-      new_connection: {
+      p1reconnect: {
+        type: DataTypes.BOOLEAN
+      },
+      p2reconnect: {
         type: DataTypes.BOOLEAN
       },
       createdAt: {

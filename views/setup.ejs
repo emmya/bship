@@ -1,0 +1,25 @@
+<% include partials/header %>
+<div class="hide">
+  <div class="hide" id="player1"><%= p1 %></div>
+  <div class="hide" id="player2"><%= p2 %></div>
+  <div class="hide" id="gameid"><%= gameId %></div>
+</div>
+
+<h2>SETUP</h2>
+<h4><%= p1 %> vs. <%= p2 %></h4>
+
+<div class="setupContainer">
+<button class="submit">submit board</button>
+  <div class="board submitBoard">
+  <div class="columnDiv columnDivSetup"></div>
+  <div class="rowDiv rowDivSetup"></div>
+  <div class="container setupBoard grid"></div>
+  </div>
+
+  <div class="shipsContainer">
+  </div>
+</div>
+
+
+<script src="../../javascripts/setup.js"></script>
+<% include partials/footer %>

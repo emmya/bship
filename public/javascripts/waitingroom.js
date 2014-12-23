@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     name = "guest"+rand.toString();
     window.localStorage.name = name;
   }
-document.title = name;
+  document.title = name;
 
 // ===================
-//    list set up
+//      list init
 // ===================
   var socket = io('/home');
   var onlineList = [];
@@ -46,7 +46,6 @@ document.title = name;
 // ===================
 //    send invite
 // ===================
-
 //adds click listener to list of users
   $(document).on('click', '.userItem', function(e) {
     var targetIndex = parseInt(e.target.id);
@@ -56,74 +55,79 @@ document.title = name;
     socket.emit('invite', targetSocket, senderSocket);
   });
 
+// ===================
+//   receive invite
+// ===================
 //appends game invitation
-socket.on('receive_invitation', function(senderSocket) {
-  var sender = getNameBySocket(senderSocket, onlineList);
-  $('.messages').append("<div class='message' id='"+sender+"'>Accept invite sent by "+sender+"?");
-});
+  socket.on('receive_invitation', function(senderSocket) {
+    var sender = getNameBySocket(senderSocket, onlineList);
+    $('.messages').append("<div class='message' id='"+sender+"'>Accept invite sent by "+sender+"?");
+  });
 //invitation click listener
-$(document).on('click', '.messages', function(e) {
-  var senderName = e.target.id;
-  var inviterSocket = getSocketByName(senderName, onlineList);
-  var inviteeSocket = getOwnSocket(name, onlineList);
+  $(document).on('click', '.messages', function(e) {
+    var senderName = e.target.id;
+    var inviterSocket = getSocketByName(senderName, onlineList);
+    var inviteeSocket = getOwnSocket(name, onlineList);
 //At some point, can add a check here if a user is about to clear
 //their current locally stored game
-  resetLocalStorage();
-  socket.emit('accept_invite', inviterSocket, inviteeSocket, senderName, name);
-});
+    resetLocalStorage();
+    socket.emit('accept_invite', inviterSocket, inviteeSocket, senderName, name);
+  });
 
-//redirects both players to game when is accepted
-socket.on('game_redirect', function(gameId, role) {
-  if (role === "p2") {
-    window.localStorage.isYourTurn = "true";
-  } else {
-    window.localStorage.isYourTurn = "false";
-  }
-  console.log('redirecting to game #'+gameId+
-    ". Your role is", role,
-    ", and isYourTurn is", window.localStorage.isYourTurn);
-  window.location = "/battleship/"+gameId.toString();
-});
+// ===================
+//    game redirect
+// ===================
+//invite accepter is p2 and it will be their turn first
+  socket.on('setup_redirect', function(gameId, role) {
+    if (role === "p2") {
+      window.localStorage.isYourTurn = "true";
+    } else {
+      window.localStorage.isYourTurn = "false";
+    }
+    console.log('redirecting to game #'+gameId+
+      ". Your role is", role,
+      ", and isYourTurn is", window.localStorage.isYourTurn);
+    window.location = "/battleship/setup/"+gameId.toString();
+  });
 
-
+// ===================
+//      functions
+// ===================
 //functions to fetch data from onlineList
-function getSocketByIndex(index, list) {
-  console.log("recipient socket is", list[index].socket);
-  return list[index].socket;
-}
-function getOwnSocket(name, list) {
-  for (var usr in list) {
-    if (list[usr].name === name) {
-      console.log("sender socket is", list[usr].socket);
-      return list[usr].socket;
+  function getSocketByIndex(index, list) {
+    console.log("recipient socket is", list[index].socket);
+    return list[index].socket;
+  }
+  function getOwnSocket(name, list) {
+    for (var usr in list) {
+      if (list[usr].name === name) {
+        console.log("sender socket is", list[usr].socket);
+        return list[usr].socket;
+      }
+    } return false;
+  }
+  function getNameBySocket(sockID, list) {
+    for (var usr in list) {
+      if (list[usr].socket === sockID) {
+        return list[usr].name;
+      }
+    } return false;
+  }
+  function getSocketByName(name, list) {
+    for (var usr in list) {
+      if (list[usr].name === name) {
+        return list[usr].socket;
+      }
+    } return false;
+  }
+// resets local storage. called upon game invite/acceptance
+  function resetLocalStorage() {
+    if (window.localStorage.gameBoard.length > 0) {
+      window.localStorage.gameBoard = "";
+      window.localStorage.ships = "";
+      window.localStorage.opponentReady = "false";
     }
   }
-  return false;
-}
-function getNameBySocket(sockID, list) {
-  for (var usr in list) {
-    if (list[usr].socket === sockID) {
-      return list[usr].name;
-    }
-  }
-  return false;
-}
-function getSocketByName(name, list) {
-  for (var usr in list) {
-    if (list[usr].name === name) {
-      return list[usr].socket;
-    }
-  }
-  return false;
-}
-//
-function resetLocalStorage() {
-  if (window.localStorage.currentGame.length > 0) {
-    window.localStorage.currentGame = "";
-    window.localStorage.ships = "";
-    window.localStorage.opponentReady = "false";
-  }
-}
 
 
 }); //closes document listener
