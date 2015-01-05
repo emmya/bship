@@ -124,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   function resetLocalStorage() {
     if (window.localStorage.gameBoard.length > 0) {
       window.localStorage.gameBoard = "";
+      window.localStorage.hits = "";
       window.localStorage.ships = "";
       window.localStorage.opponentReady = "false";
     }

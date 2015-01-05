@@ -1,6 +1,7 @@
 body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
+  /*background-color: blue;*/
 }
 
 .hide {
@@ -58,6 +59,7 @@ body {
   height: 20px;
   position: absolute;
   border-radius: 10px;
+  background-size: contain;
 }
 .carrier {
   height: 150px;

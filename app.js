@@ -147,6 +147,8 @@ gameSocket.on('connection', function(socket) {
             p1reconnect: true });
           if (isOppConnected(game.p2name, room)) { //emits update to opp
             io.to(game.p2socket).emit('update_oSocket', socket.id);
+          } else {
+            console.log('Your opponent (p2) is not connected');
           }
         } else {
           game.updateAttributes({
@@ -154,6 +156,8 @@ gameSocket.on('connection', function(socket) {
             p2reconnect: true });
           if (isOppConnected(game.p1name, room)) { //emits update to opp
             io.to(game.p1socket).emit('update_oSocket', socket.id);
+          } else {
+            console.log('Your opponent (p1) is not connected');
           }
         }
         console.log('both players were already ready');

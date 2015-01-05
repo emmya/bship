@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       console.log('waiting on opponent');
     });
     socket.on('draw_game', function(p1socket, p2socket) {
-      console.log("drawing game! p1socket is", p1socket);
       drawGame(myName, oname, pnum, window.localStorage.isYourTurn);
       game.myName = myName;
       game.pnum = pnum;
@@ -63,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         game.mySocket = p2socket;
         game.oSocket = p1socket;
       }
-      console.log("calling play game with mysocket", game.mySocket);
+      console.log("calling play game with mysocket", game.mySocket, 'and oSocket', game.oSocket);
       playGame(socket, game);
     });
 

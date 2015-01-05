@@ -58,11 +58,11 @@ if (auth) {
   };
 //Creates array of ship objects
   var ships = [];
-  ships.push(new Ship("carrier", 5, "", null, null));
-  ships.push(new Ship("battleship", 4, "", null, null));
-  ships.push(new Ship("submarine", 3, "", null, null));
-  ships.push(new Ship("cruiser", 3, "", null, null));
-  ships.push(new Ship("destroyer", 2, "", null, null));
+  ships.push(new Ship("carrier", 5, "http://i.imgur.com/kI03pax.png", null, null));
+  ships.push(new Ship("battleship", 4, "http://i.imgur.com/sSdJxQ7.png", null, null));
+  ships.push(new Ship("submarine", 3, "http://i.imgur.com/R5Dvjis.png", null, null));
+  ships.push(new Ship("cruiser", 3, "http://i.imgur.com/h4bJRBc.png", null, null));
+  ships.push(new Ship("destroyer", 2, "http://i.imgur.com/a3szTio.png", null, null));
 
 //Draws individual ship containers
   for (var num in ships) {
@@ -76,8 +76,10 @@ if (auth) {
   // console.log("adding ship", ships[ship].name);
     $('<div/>', {
       class: "ship "+ships[ship].name,
-      id: ship
+      id: ship,
+      // src: ships[ship].url
     }).appendTo($('.shipContainer_'+ships[ship].name));
+   // $('.'+ships[ship].name).css('background-image', 'url('+ships[ship].url+')');
   }
 
 //DRAGGING FUNCTIONALITY
@@ -178,11 +180,18 @@ if (auth) {
 
     assignTiles();
     // AT THIS POINT, BOARD ARRAY IS READY TO BE SUBMITTED!
+    var oTile = function() {
+      this.hit = false;
+      this.ship = null;
+    };
+    var newHitArr = [];
+    for (var b=0; b<100; b++) {
+      newHitArr.push(new oTile());
+    }
 
     window.localStorage.gameBoard = JSON.stringify(boardArray);
     window.localStorage.ships = JSON.stringify(ships);
-    console.log("saving board to local storage");
-    console.log("board is", window.localStorage.gameBoard);
+    window.localStorage.hits = JSON.stringify(newHitArr);
 
     // var socket = io('/');
     // socket.on('connect', function() {
