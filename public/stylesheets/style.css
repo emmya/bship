@@ -7,6 +7,9 @@ body {
 .hide {
   display: none;
 }
+.ego {
+  font-size: 11px;
+}
 
 /*BOARD*/
 .setupBoard, .playerBoard, .opponentBoard {
