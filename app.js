@@ -126,6 +126,7 @@ gameSocket.on('connection', function(socket) {
     for (var i=0; i<playerList.length; i++) {
       if (playerList[i].socket === socket.id) {
         playerList.splice(i, 1);
+        console.log("PLAYER REMOVED");
       }
     }
   });
@@ -147,7 +148,10 @@ gameSocket.on('connection', function(socket) {
             p1reconnect: true });
           if (isOppConnected(game.p2name, room)) { //emits update to opp
             io.to(game.p2socket).emit('update_oSocket', socket.id);
+            console.log('both players were already ready');
+            io.to(socket.id).emit('draw_game', game.p1socket, game.p2socket, true); //emits only to reconnected socket
           } else {
+            io.to(socket.id).emit('draw_game', game.p1socket, game.p2socket, false); //emits only to reconnected socket
             console.log('Your opponent (p2) is not connected');
           }
         } else {
@@ -156,12 +160,13 @@ gameSocket.on('connection', function(socket) {
             p2reconnect: true });
           if (isOppConnected(game.p1name, room)) { //emits update to opp
             io.to(game.p1socket).emit('update_oSocket', socket.id);
+            console.log('both players were already ready');
+            io.to(socket.id).emit('draw_game', game.p1socket, game.p2socket, true); //emits only to reconnected socket
           } else {
+            io.to(socket.id).emit('draw_game', game.p1socket, game.p2socket, false); //emits only to reconnected socket
             console.log('Your opponent (p1) is not connected');
           }
         }
-        console.log('both players were already ready');
-        io.to(socket.id).emit('draw_game', game.p1socket, game.p2socket); //emits only to reconnected socket
       } else { //if the game hasn't begun yet
         if (pnum === 1) {
           game.updateAttributes({
@@ -174,7 +179,7 @@ gameSocket.on('connection', function(socket) {
         }
         if (game.p1ready && game.p2ready) {
           console.log("both players are now ready");
-          io.to(room).emit('draw_game', game.p1socket, game.p2socket);
+          io.to(room).emit('draw_game', game.p1socket, game.p2socket, true);
         } else {
           console.log("both players are not ready");
           io.to(socket.id).emit('waiting');
@@ -195,6 +200,11 @@ gameSocket.on('connection', function(socket) {
   socket.on('hit_response', function(oTileData, tileNumber, game) {
     console.log('received hit response call from', game.myName, 'and about to emit result to', game.oSocket);
     io.to(game.oSocket).emit('hit_result', oTileData, tileNumber);
+  });
+
+  socket.on('win', function(game) {
+    console.log("player", game.myName, "has won");
+    io.to(game.oSocket).emit('loss', game);
   });
 
 

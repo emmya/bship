@@ -1,14 +1,31 @@
-function playGame(socket, game) {
+function playGame(socket, game, oIsConnected) {
 
 var myBoard = JSON.parse(window.localStorage.gameBoard);
 var myHits = JSON.parse(window.localStorage.hits);
 var myShots = JSON.parse(window.localStorage.shots);
 
+//win/loss checkers
+if (checkWin()){
+  $('.result').empty().append("you won this game!!!");
+  socket.emit('win', game);
+}
+socket.on('loss', function(game) {
+  $('.result').empty().append("You lost to "+oname+"! Game over");
+});
 
-//wait do I need this?
+if (!oIsConnected) {
+  $('.isConnected').empty().append("///// Warning: opponent is not connected");
+}
+
+// Opponent socket updater - called when op reconnects
 socket.on('update_oSocket', function(oSocket) {
   console.log('osocket updated to', oSocket);
   game.oSocket = oSocket;
+  $('.isConnected').empty();
+});
+socket.on('not_connected', function() {
+  console.log("o not connected");
+  $('.isConnected').empty().append("Warning: opponent is not connected");
 });
 
 //Tile hover CSS triggers
@@ -69,6 +86,7 @@ socket.on('hit_result', function(oTileHit, tileNumber) {
     //WIN CHECKER
     if (checkWin()){
       $('.result').empty().append("YOU WIN!!!");
+      socket.emit('win', game);
     }
   } else { //miss
     $('.result').empty().append("miss. "+oname+"'s turn");
@@ -78,7 +96,9 @@ socket.on('hit_result', function(oTileHit, tileNumber) {
   window.localStorage.hits = JSON.stringify(myHits);
 });
 
-
+// =================
+//    functions
+// =================
 function updateShots(shipArr) {
   if (shipArr[1] === 0) {
     $('.result').empty().append("YOU SUNK THE "+shipArr[0]+"! "+oname+"'s turn");

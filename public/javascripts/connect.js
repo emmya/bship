@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       console.log('waiting on opponent');
       $('.waiting').removeClass('hide');
     });
-    socket.on('draw_game', function(p1socket, p2socket) {
+    socket.on('draw_game', function(p1socket, p2socket, oIsConnected) {
       $('.waiting').addClass('hide');
       drawGame(myName, oname, pnum, window.localStorage.isYourTurn);
       game.myName = myName;
@@ -64,12 +64,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         game.mySocket = p2socket;
         game.oSocket = p1socket;
       }
-      console.log("calling play game with mysocket", game.mySocket, 'and oSocket', game.oSocket);
-      playGame(socket, game);
+
+      console.log("calling play game with mysocket", game.mySocket, 'oSocket', game.oSocket, 'and oisconnected', oIsConnected);
+      playGame(socket, game, oIsConnected);
     });
 
-
-
+    // socket.on('not_connected', function() {
+    //   console.log("o not connected");
+    //   $('.isConnected').empty().append("///// Warning: opponent is not connected. ");
+    // });
 
 
 
