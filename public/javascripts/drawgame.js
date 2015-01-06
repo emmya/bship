@@ -68,7 +68,6 @@ function addCorrectClass(tileNum) {
     }
   }
   if (myBoard[tileNum-1].hit === true) {
-    console.log(myBoard[tileNum-1].ship);
     if (myBoard[tileNum-1].ship !== null) {
       $('#p'+id).addClass('hitTrue');
     } else {

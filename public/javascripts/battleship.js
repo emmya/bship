@@ -69,10 +69,14 @@ socket.on('hit_result', function(oTileHit, tileNumber) {
         var shotson = myShots[i][1];
         myShots[i][1] = shotson -1;
         console.log("#tiles left on ship:", myShots[i][1]);
-        window.localStorage.shots = JSON.stringify(myShots);
         updateShots(myShots[i]);
         break;
       }
+    }
+    //WIN CHECKER
+    if (checkWin()){
+      $('.result').empty();
+      $('.result').append("YOU WIN!!!");
     }
   } else {
     $('.result').empty();
@@ -90,6 +94,19 @@ function updateShots(shipArr) {
     $('.result').append("YOU SUNK THE "+shipArr[0]+"! "+oname+"'s turn");
     $('.sunkList').append("<li>"+shipArr[0]+"</li>");
   }
+  window.localStorage.shots = JSON.stringify(myShots);
+}
+
+function checkWin() {
+  var w = 0;
+  for (var i in myShots) {
+    w += myShots[i][1];
+  }
+  if (w <= 0) {
+    console.log("WIN!!!!");
+    return true;
+  }
+  return false;
 }
 
 
