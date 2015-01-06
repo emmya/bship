@@ -3,30 +3,28 @@ function playGame(socket, game) {
 var myBoard = JSON.parse(window.localStorage.gameBoard);
 var myHits = JSON.parse(window.localStorage.hits);
 var myShots = JSON.parse(window.localStorage.shots);
-// console.log("board is", myBoard);
-// console.log(game);
 
+
+//wait do I need this?
 socket.on('update_oSocket', function(oSocket) {
   console.log('osocket updated to', oSocket);
   game.oSocket = oSocket;
 });
 
+//Tile hover CSS triggers
 $('.opponentTile').mouseenter(function() {
   if (window.localStorage.isYourTurn === "true") {
     $(this).addClass('hover');
   }
 });
 $('.opponentTile').mouseleave(function() {
-  if (window.localStorage.isYourTurn === "true") {
-    $(this).removeClass('hover');
-  }
+  $(this).removeClass('hover');
 });
 
 //SEND a shot
 $('.opponentTile').click(function() {
   $(this).removeClass('hover');
   if (window.localStorage.isYourTurn === "true") {
-
     var tileNumber = parseInt($(this).attr('id'));
     $(this).addClass('shot'); //adding 'shot' CSS
     window.localStorage.isYourTurn = "false";
@@ -40,12 +38,10 @@ socket.on('tile_hit', function(tileNumber) {
   hitTileData.hit = true;
   if (hitTileData.active) {
     $('#p'+(tileNumber.toString())).addClass('hitTrue');
-    $('.result').empty();
-    $('.result').append(hitTileData.ship+" shot! Your turn");
+    $('.result').empty().append(hitTileData.ship+" shot! Your turn");
   } else {
     $('#p'+(tileNumber.toString())).addClass('hitFalse');
-    $('.result').empty();
-    $('.result').append(oname+" missed! Your turn");
+    $('.result').empty().append(oname+" missed! Your turn");
   }
   window.localStorage.isYourTurn = "true";
   console.log(hitTileData);
@@ -57,14 +53,11 @@ socket.on('tile_hit', function(tileNumber) {
 //RECEIVE a shot response
 socket.on('hit_result', function(oTileHit, tileNumber) {
   myHits[tileNumber-1].hit = true;
-  if (oTileHit.active === true) {
-    $('.result').empty();
-    $('.result').append("NICE HIT. "+oname+"'s turn");
+  if (oTileHit.active === true) { //hit
+    $('.result').empty().append("NICE HIT. "+oname+"'s turn");
     $('#'+(tileNumber.toString())).addClass('shotTrue');
     myHits[tileNumber-1].ship = oTileHit.ship;
-    for (var i in myShots) {
-      console.log("going thru myshots");
-      console.log(myShots[i][0]);
+    for (var i in myShots) { //updates myShots
       if (oTileHit.ship === myShots[i][0]) {
         var shotson = myShots[i][1];
         myShots[i][1] = shotson -1;
@@ -75,12 +68,10 @@ socket.on('hit_result', function(oTileHit, tileNumber) {
     }
     //WIN CHECKER
     if (checkWin()){
-      $('.result').empty();
-      $('.result').append("YOU WIN!!!");
+      $('.result').empty().append("YOU WIN!!!");
     }
-  } else {
-    $('.result').empty();
-    $('.result').append("miss. "+oname+"'s turn");
+  } else { //miss
+    $('.result').empty().append("miss. "+oname+"'s turn");
     console.log("You missed!");
     $('#'+(tileNumber.toString())).addClass('shotFalse');
   }
@@ -90,8 +81,7 @@ socket.on('hit_result', function(oTileHit, tileNumber) {
 
 function updateShots(shipArr) {
   if (shipArr[1] === 0) {
-    $('.result').empty();
-    $('.result').append("YOU SUNK THE "+shipArr[0]+"! "+oname+"'s turn");
+    $('.result').empty().append("YOU SUNK THE "+shipArr[0]+"! "+oname+"'s turn");
     $('.sunkList').append("<li>"+shipArr[0]+"</li>");
   }
   window.localStorage.shots = JSON.stringify(myShots);
