@@ -138,7 +138,13 @@ body {
 }
 
 
-
+/*Waiting div*/
+.waiting {
+  position: absolute;
+  background-color: white;
+  height: 200px;
+  width: 500px;
+}
 
 
 

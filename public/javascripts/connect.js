@@ -49,8 +49,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
     socket.on('waiting', function() {
       console.log('waiting on opponent');
+      $('.waiting').removeClass('hide');
     });
     socket.on('draw_game', function(p1socket, p2socket) {
+      $('.waiting').addClass('hide');
       drawGame(myName, oname, pnum, window.localStorage.isYourTurn);
       game.myName = myName;
       game.pnum = pnum;
