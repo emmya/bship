@@ -43,6 +43,36 @@ body {
   width: 30px;
 }
 
+/*PLAYER BOARD ADJUSTMENTS*/
+.playerBoardContainer {
+  float: left;
+  margin-left: 20px;
+}
+.playerBoard {
+  width: 200px;
+  height: 200px;
+}
+.playerTile {
+  width: 20px;
+  height: 20px;
+  border: 1px solid gray;
+}
+/*labels*/
+.rowDivPlayer {
+  height: 200px;
+}
+.columnDivPlayer {
+  width: 200px;
+  margin-top: 10px;
+}
+.rowLabelPlayer {
+  color: gray;
+  height: 20px;
+}
+.columnLabelPlayer {
+  color: gray;
+  width: 20px;
+}
 /*SHIP CONTAINER*/
 .shipsContainer {
   float: left;
@@ -85,10 +115,10 @@ body {
   background-color: red;
 }
 .hitTrue {
-  border: 3px solid orange;
+  background-color: orange;
 }
 .hitFalse {
-  border: 3px solid lime;
+  background-color: lime;
 }
 .shotTrue {
   background-color: blue;
@@ -96,17 +126,16 @@ body {
 .shotFalse {
   background-color: gray;
 }
-
-/*OPPONENT BOARD*/
-.playerBoardContainer {
-  padding-top: 20px;
-  clear: both;
+/*RESULT BOX*/
+.result {
+  margin-top: -5px;
+  margin-bottom: 10px;
+  color: red;
+  font-size: 20px;
 }
-
-/*game*/
-/*.turn {
-  position: absolute;
-}*/
+.hover {
+  background-color: yellow;
+}
 
 
 

@@ -10,15 +10,25 @@ socket.on('update_oSocket', function(oSocket) {
   game.oSocket = oSocket;
 });
 
+$('.opponentTile').mouseenter(function() {
+  if (window.localStorage.isYourTurn === "true") {
+    $(this).addClass('hover');
+  }
+});
+$('.opponentTile').mouseleave(function() {
+  if (window.localStorage.isYourTurn === "true") {
+    $(this).removeClass('hover');
+  }
+});
+
 //SEND a shot
 $('.opponentTile').click(function() {
+  $(this).removeClass('hover');
   if (window.localStorage.isYourTurn === "true") {
 
     var tileNumber = parseInt($(this).attr('id'));
     $(this).addClass('shot'); //adding 'shot' CSS
     window.localStorage.isYourTurn = "false";
-    $('.turn').empty();
-    $('.turn').append(oname+"'s turn");
     socket.emit('tile_shot', tileNumber, game);
   }
 });
@@ -28,13 +38,15 @@ socket.on('tile_hit', function(tileNumber) {
   var hitTileData = myBoard[tileNumber-1];
   hitTileData.hit = true;
   if (hitTileData.active) {
-    $('#'+(tileNumber.toString())).addClass('hitTrue');
+    $('#p'+(tileNumber.toString())).addClass('hitTrue');
+    $('.result').empty();
+    $('.result').append(hitTileData.ship+" shot! Your turn");
   } else {
-    $('#'+(tileNumber.toString())).addClass('hitFalse');
+    $('#p'+(tileNumber.toString())).addClass('hitFalse');
+    $('.result').empty();
+    $('.result').append(oname+" missed! Your turn");
   }
   window.localStorage.isYourTurn = "true";
-  $('.turn').empty();
-  $('.turn').append("Your turn");
   console.log(hitTileData);
   window.localStorage.gameBoard = JSON.stringify(myBoard);
 
@@ -45,10 +57,14 @@ socket.on('tile_hit', function(tileNumber) {
 socket.on('hit_result', function(oTileHit, tileNumber) {
   myHits[tileNumber-1].hit = true;
   if (oTileHit.active === true) {
+    $('.result').empty();
+    $('.result').append("NICE HIT. "+oname+"'s turn");
     console.log("Nice!! You got a hit, and you hit ship", oTileHit.ship);
     $('#'+(tileNumber.toString())).addClass('shotTrue');
     myHits[tileNumber-1].ship = oTileHit.ship;
   } else {
+    $('.result').empty();
+    $('.result').append("miss. "+oname+"'s turn");
     console.log("You missed!");
     $('#'+(tileNumber.toString())).addClass('shotFalse');
   }

@@ -3,9 +3,9 @@ function drawGame(name, oname, pnum, turn) {
   $('.oName').append(oname);
 
   if (turn === "true") {
-    $('.turn').append('Your turn');
+    $('.result').append('Your turn');
   } else {
-    $('.turn').append(oname+"'s turn");
+    $('.result').append(oname+"'s turn");
   }
 
 var myBoard = JSON.parse(window.localStorage.gameBoard);
@@ -34,6 +34,26 @@ function drawOpponentBoard() {
 drawOpponentBoard();
 
 // =======================
+//  DRAWING USER'S BOARD
+// =======================
+
+function drawPlayerBoard() {
+  for (var d=1; d<=100; d++) {
+    $('.playerBoard').append("<div class='tile playerTile' id='p"+d+"'></div>");
+    addCorrectClass(d);
+  }
+  // draw row/number labels
+  for (var a=1; a<=10; a++) {
+      $('.rowDivPlayer').append("<div class='rowLabel rowLabelPlayer'>"+a+"</div>");
+  }
+  var alph = "ABCDEFGHIJK";
+  for (var z=0; z<10; z++) {
+      $('.columnDivPlayer').append("<div class='columnLabel columnLabelPlayer' id='"+alph[z]+"'>"+alph[z]+"</div>");
+  }
+}
+drawPlayerBoard();
+
+// =======================
 //   UPDATING GAME DATA
 // =======================
 
@@ -49,9 +69,9 @@ function addCorrectClass(tileNum) {
   if (myBoard[tileNum-1].hit === true) {
     console.log(myBoard[tileNum-1].ship);
     if (myBoard[tileNum-1].ship !== null) {
-      $('#'+id).addClass('hitTrue');
+      $('#p'+id).addClass('hitTrue');
     } else {
-      $('#'+id).addClass('hitFalse');
+      $('#p'+id).addClass('hitFalse');
     }
   }
 }
