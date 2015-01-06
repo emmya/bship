@@ -218,6 +218,6 @@ function isOppConnected(name, room) {
   return false;
 }
 
-var server = http.listen(3000, function() {
+var server = http.listen(process.env.PORT || 3000, function() {
   console.log('Listening on port %d', server.address().port);
 });
