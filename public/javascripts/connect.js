@@ -17,14 +17,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
       pnum;
   var room = gameId.toString();
 
+//is it the players current game?
+  if (room != window.localStorage.gameNumber) {
+    alert("You already have an active game!");
+    window.location = ("/battleship/"+window.localStorage.gameNumber);
+  }
+
 //establishing authentication and assigning names
   if (myName === player1) {
-    document.title = "p1";
+    document.title = "BATTLESHIP | "+player1;
     oname = player2;
     pnum = 1;
     auth = true;
   } else if (myName === player2) {
-    document.title = "p2";
+    document.title = "BATTLESHIP | "+player2;
     oname = player1;
     pnum = 2;
     auth = true;
@@ -68,13 +74,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       console.log("calling play game with mysocket", game.mySocket, 'oSocket', game.oSocket, 'and oisconnected', oIsConnected);
       playGame(socket, game, oIsConnected);
     });
-
-    // socket.on('not_connected', function() {
-    //   console.log("o not connected");
-    //   $('.isConnected').empty().append("///// Warning: opponent is not connected. ");
-    // });
-
-
 
 
   } //close if auth check

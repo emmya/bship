@@ -14,10 +14,14 @@ socket.on('loss', function(game) {
 });
 
 if (!oIsConnected) {
-  $('.isConnected').empty().append("///// Warning: opponent is not connected");
+  $('.isConnected').empty().append("///// Opponent is not connected");
+  $('.disconnected').removeClass('hide');
+} else {
+  $('.disconnected').addClass('hide');
 }
 socket.on('opponent_disconnected', function() {
-  $('.isConnected').empty().append("///// Warning: opponent is not connected");
+  $('.disconnected').removeClass('hide');
+  $('.isConnected').empty().append("///// Opponent is not connected");
 });
 
 // Opponent socket updater - called when op reconnects
@@ -25,6 +29,7 @@ socket.on('update_oSocket', function(oSocket) {
   console.log('osocket updated to', oSocket);
   game.oSocket = oSocket;
   $('.isConnected').empty();
+  $('.disconnected').addClass('hide');
 });
 
 //Tile hover CSS triggers
@@ -44,6 +49,7 @@ $('.opponentTile').click(function() {
     var tileNumber = parseInt($(this).attr('id'));
     $(this).addClass('shot'); //adding 'shot' CSS
     window.localStorage.isYourTurn = "false";
+    $('.notTurn').removeClass('hide');
     socket.emit('tile_shot', tileNumber, game);
   }
 });
@@ -60,6 +66,7 @@ socket.on('tile_hit', function(tileNumber) {
     $('.result').empty().append(oname+" missed! Your turn");
   }
   window.localStorage.isYourTurn = "true";
+  $('.notTurn').addClass('hide');
   console.log(hitTileData);
   window.localStorage.gameBoard = JSON.stringify(myBoard);
 

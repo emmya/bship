@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 //establishing game and assigning names
   if (myName === player1) {
-    document.title = "p1";
+    document.title = "p1 setup";
     pnum = 1;
   } else if (myName === player2) {
-    document.title = "p2";
+    document.title = "p2 setup";
     pnum = 2;
     console.log(window.localStorage.gameBoard);
   } else {
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if (window.localStorage.gameBoard.length > 1) {
       auth = false;
       alert("You already have an active game.");
+      window.location = ("/battleship/"+window.localStorage.gameNumber);
     }
   }
 

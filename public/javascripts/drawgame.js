@@ -4,8 +4,10 @@ function drawGame(name, oname, pnum, turn) {
 
   if (turn === "true") {
     $('.result').append('Your turn');
+    $('.notTurn').addClass('hide');
   } else {
     $('.result').append(oname+"'s turn");
+    $('.notTurn').removeClass('hide');
   }
 
 var myBoard = JSON.parse(window.localStorage.gameBoard);

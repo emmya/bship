@@ -44,6 +44,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
   });
 
 // ===================
+//    update name
+// ===================
+  $('.submitName').click(function() {
+    var newName = $('.name').val();
+    if (newName.length >= 3) {
+      window.localStorage.name = newName;
+    } else {
+      alert("please choose a name with 3 or more characters");
+    }
+  });
+
+// ===================
 //    send invite
 // ===================
 //adds click listener to list of users
@@ -84,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     } else {
       window.localStorage.isYourTurn = "false";
     }
+    window.localStorage.gameNumber = gameId.toString();
     console.log('redirecting to game #'+gameId+
       ". Your role is", role,
       ", and isYourTurn is", window.localStorage.isYourTurn);
@@ -128,6 +141,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       window.localStorage.ships = "";
       window.localStorage.opponentReady = "false";
       window.localStorage.shots = "";
+      window.localStorage.gameNumber = "";
     }
   }
 
