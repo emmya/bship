@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     window.localStorage.name = name;
   }
   document.title = name;
+  $('.currentName').empty().append(name);
 
 // ===================
 //      list init
