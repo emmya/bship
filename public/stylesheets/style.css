@@ -110,6 +110,12 @@ body {
   margin-bottom: 10px;
 }
 
+/*SUNK LIST*/
+.sunk {
+  float: left;
+  font-size: 13px;
+}
+
 /*TILE STATUS*/
 .shot {
   background-color: red;

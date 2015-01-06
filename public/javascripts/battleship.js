@@ -2,7 +2,8 @@ function playGame(socket, game) {
 
 var myBoard = JSON.parse(window.localStorage.gameBoard);
 var myHits = JSON.parse(window.localStorage.hits);
-console.log("board is", myBoard);
+var myShots = JSON.parse(window.localStorage.shots);
+// console.log("board is", myBoard);
 // console.log(game);
 
 socket.on('update_oSocket', function(oSocket) {
@@ -59,9 +60,20 @@ socket.on('hit_result', function(oTileHit, tileNumber) {
   if (oTileHit.active === true) {
     $('.result').empty();
     $('.result').append("NICE HIT. "+oname+"'s turn");
-    console.log("Nice!! You got a hit, and you hit ship", oTileHit.ship);
     $('#'+(tileNumber.toString())).addClass('shotTrue');
     myHits[tileNumber-1].ship = oTileHit.ship;
+    for (var i in myShots) {
+      console.log("going thru myshots");
+      console.log(myShots[i][0]);
+      if (oTileHit.ship === myShots[i][0]) {
+        var shotson = myShots[i][1];
+        myShots[i][1] = shotson -1;
+        console.log("#tiles left on ship:", myShots[i][1]);
+        window.localStorage.shots = JSON.stringify(myShots);
+        updateShots(myShots[i]);
+        break;
+      }
+    }
   } else {
     $('.result').empty();
     $('.result').append("miss. "+oname+"'s turn");
@@ -72,7 +84,13 @@ socket.on('hit_result', function(oTileHit, tileNumber) {
 });
 
 
-
+function updateShots(shipArr) {
+  if (shipArr[1] === 0) {
+    $('.result').empty();
+    $('.result').append("YOU SUNK THE "+shipArr[0]+"! "+oname+"'s turn");
+    $('.sunkList').append("<li>"+shipArr[0]+"</li>");
+  }
+}
 
 
 

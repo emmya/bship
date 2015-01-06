@@ -127,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       window.localStorage.hits = "";
       window.localStorage.ships = "";
       window.localStorage.opponentReady = "false";
+      window.localStorage.shots = "";
     }
   }
 

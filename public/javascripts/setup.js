@@ -180,6 +180,8 @@ if (auth) {
 
     assignTiles();
     // AT THIS POINT, BOARD ARRAY IS READY TO BE SUBMITTED!
+
+    // creating tile hits tracker
     var oTile = function() {
       this.hit = false;
       this.ship = null;
@@ -189,9 +191,17 @@ if (auth) {
       newHitArr.push(new oTile());
     }
 
+    var newShotArr = [];
+    for (var ss in ships) {
+      newShotArr.push([ships[ss].name, ships[ss].length]);
+    }
+    console.log(newShotArr);
+
+
     window.localStorage.gameBoard = JSON.stringify(boardArray);
     window.localStorage.ships = JSON.stringify(ships);
     window.localStorage.hits = JSON.stringify(newHitArr);
+    window.localStorage.shots = JSON.stringify(newShotArr);
 
     // var socket = io('/');
     // socket.on('connect', function() {

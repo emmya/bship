@@ -9,9 +9,10 @@ function drawGame(name, oname, pnum, turn) {
   }
 
 var myBoard = JSON.parse(window.localStorage.gameBoard);
-var myHits = JSON.parse(window.localStorage.hits);
-console.log(myBoard);
-console.log(myHits);
+var myHits = JSON.parse(window.localStorage.hits); //hits on own board
+var myShots = JSON.parse(window.localStorage.shots); //shots that have been made
+console.log(myShots);
+// console.log(myHits);
 
 // =======================
 //  DRAWING OPPONENT BOARD
@@ -75,7 +76,12 @@ function addCorrectClass(tileNum) {
     }
   }
 }
-
+//update shot list
+for (var sh in myShots) {
+  if (myShots[sh][1] === 0) {
+    $('.sunkList').append("<li>"+myShots[sh][0]+"</li>");
+  }
+}
 
 
 
