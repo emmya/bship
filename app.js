@@ -125,6 +125,8 @@ gameSocket.on('connection', function(socket) {
     console.log("Player disconnected.");
     for (var i=0; i<playerList.length; i++) {
       if (playerList[i].socket === socket.id) {
+        console.log("DISCONNECTING PLAYER ROOM IS", playerList[i].gameId);
+        io.to(playerList[i].gameId).emit('opponent_disconnected');
         playerList.splice(i, 1);
         console.log("PLAYER REMOVED");
       }

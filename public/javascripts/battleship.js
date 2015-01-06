@@ -16,16 +16,15 @@ socket.on('loss', function(game) {
 if (!oIsConnected) {
   $('.isConnected').empty().append("///// Warning: opponent is not connected");
 }
+socket.on('opponent_disconnected', function() {
+  $('.isConnected').empty().append("///// Warning: opponent is not connected");
+});
 
 // Opponent socket updater - called when op reconnects
 socket.on('update_oSocket', function(oSocket) {
   console.log('osocket updated to', oSocket);
   game.oSocket = oSocket;
   $('.isConnected').empty();
-});
-socket.on('not_connected', function() {
-  console.log("o not connected");
-  $('.isConnected').empty().append("Warning: opponent is not connected");
 });
 
 //Tile hover CSS triggers
