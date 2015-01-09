@@ -11,7 +11,8 @@ var match;
 
 if (process.env.DATABASE_URL) {
   match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
-
+  console.log("THIS IS DA MATCHHH");
+  console.log(match[5]);
   sequelize = new Sequelize(match[5], match[1], match[2], {
     dialect:  'postgres',
     protocol: 'postgres',
