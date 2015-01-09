@@ -9,10 +9,10 @@ var db        = {};
 var sequelize;
 var match;
 
-if (process.env.HEROKU_POSTGRESQL_MAUVE_URL) {
-  match = process.env.HEROKU_POSTGRESQL_MAUVE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/).match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
-  console.log("THIS IS DA DATABASE FOOL!");
-  console.log(process.env.HEROKU_POSTGRESQL_MAUVE_URL);
+if (process.env.DATABASE_URL) {
+  match = process.env.DATABASE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
+  console.log("THIS IS DA DATABASE");
+  console.log(process.env.DATABASE_URL);
   sequelize = new Sequelize(match[5], match[1], match[2], {
     dialect:  'postgres',
     protocol: 'postgres',
