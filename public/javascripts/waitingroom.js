@@ -136,14 +136,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
   }
 // resets local storage. called upon game invite/acceptance
   function resetLocalStorage() {
-    if (window.localStorage.gameBoard.length > 0) {
+    // if (window.localStorage.gameBoard.length > 0) {
       window.localStorage.gameBoard = "";
       window.localStorage.hits = "";
       window.localStorage.ships = "";
       window.localStorage.opponentReady = "false";
       window.localStorage.shots = "";
       window.localStorage.gameNumber = "";
-    }
+    // }
   }
 
 
