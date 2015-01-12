@@ -11,6 +11,11 @@ body {
   font-size: 11px;
 }
 
+.activeCursor:hover {
+  cursor: pointer;
+  color: purple;
+}
+
 /*BOARD*/
 .setupBoard, .playerBoard, .opponentBoard {
   box-sizing: border-box;

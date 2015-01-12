@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     for(var i=0; i<onlineList.length; i++) {
       if (onlineList[i].name !== name) {
         $('#users').append("<li class='userItem' id='"+i+"'>" + onlineList[i].name + "</li>");
+        $('.userItem').addClass('activeCursor');
       }
     }
   });
@@ -65,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var targetSocket = getSocketByIndex(targetIndex, onlineList);
     var senderSocket = getOwnSocket(name, onlineList);
     resetLocalStorage();
+    $('.messages').append('Invite sent');
     socket.emit('invite', targetSocket, senderSocket);
   });
 
@@ -75,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   socket.on('receive_invitation', function(senderSocket) {
     var sender = getNameBySocket(senderSocket, onlineList);
     $('.messages').append("<div class='message' id='"+sender+"'>Accept invite sent by "+sender+"?");
+    $('.message').addClass('activeCursor');
   });
 //invitation click listener
   $(document).on('click', '.messages', function(e) {
